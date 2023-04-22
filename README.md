@@ -16,29 +16,25 @@ public class GCSController {
     private String gcsBucket;
 
     @PostMapping("/uploaddata/{folder_name}")
-    public ResponseEntity<String> uploadData(@RequestBody(required = true) HttpEntity<byte[]> requestEntity,
+    public ResponseEntity<String> uploadData(@RequestBody(required = true) byte[] requestEntity,
                                              @PathVariable("folder_name") String folderName) {
         log.info("Received folder name for creation: {}", folderName);
-        if (requestEntity.getBody() == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Empty request body");
-        } else {
-            Storage storage = StorageOptions.getDefaultInstance().getService();
-            String folder = String.format("%s/file_%s.csv",
-                    folderName,
-                    System.currentTimeMillis());
-            BlobId blobId = BlobId.of(this.gcsBucket, folder);
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
-            Blob blob = storage.create(blobInfo, requestEntity.getBody());
-            System.out.println(blob);
-            return ResponseEntity
-                    .ok()
-                    .body("Successful upload to " + folderName + "/");
-        }
+
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        String folder = String.format("%s/file_%s.csv",
+                folderName,
+                System.currentTimeMillis());
+        BlobId blobId = BlobId.of(this.gcsBucket, folder);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
+        Blob blob = storage.create(blobInfo, requestEntity);
+        System.out.println(blob);
+        return ResponseEntity
+                .ok()
+                .body("Successful upload to " + folderName + "/");
     }
 
 }
+
 
 ```
 
@@ -76,8 +72,23 @@ We should also add the bucket name to the application.properties:
 gcs.bucket=tom-london-bucket
 ```
 
+### Note
+This curl request works with HttpRequestEntity:
+```bash
+curl --verbose -k -X POST -H "Content-Type: application/text; charset=UTF-8" --data-binary "hello" "http://localhost:8080/uploaddata/folder1"
+```
 
 
+### Docker
+- How to write dockerfile for Spring Boot application
+- How to build docker image using the dockerfile
+- How to run docker container using the docker image
+- How to exec into the container
+This link is useful for gcloud application-default auth login inside the docker container:
+https://medium.com/datamindedbe/application-default-credentials-477879e31cb5
+
+### How to enable GCR (Google Container Registry) on GCP (Google Cloud Platform) project
+![image](https://user-images.githubusercontent.com/27693622/233775130-3611d815-3ab9-4038-bb86-c1fe5b62be14.png)
 
 
 
