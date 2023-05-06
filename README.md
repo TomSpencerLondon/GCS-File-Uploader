@@ -148,3 +148,5 @@ tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectl logs gcs-uploade
 Error from server (BadRequest): container "gcs-uploader-webapp" in pod "gcs-uploader-webapp-6446865d8-ng8n8" is waiting to start: ContainerCreating
 ```
 
+This cheatsheet is useful for kubectl:
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
