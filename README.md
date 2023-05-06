@@ -92,5 +92,59 @@ https://medium.com/datamindedbe/application-default-credentials-477879e31cb5
 
 
 
+### Notes on config for GCP
+- the default region is us-central1
+- cat .config/gcloud/configurations/config_default shows the set region of the project
+- We have seen how to set the region:
+    - gcloud config set compute/region us-central1
+- We were successful in getting the sha value for the image on GCR
+    - gcloud container images list-tags --format="get(digest,digest[7:])" IMAGE-NAME
+    - but we couldn't work out how to get the region from the sha value
+- This is what the sha contains:
+  gcloud container images describe gcr.io/devops-rnd-383110/gcswebapp@sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
+  image_summary:
+  digest: sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
+  fully_qualified_digest: gcr.io/devops-rnd-383110/gcswebapp@sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
+  registry: gcr.io
+  repository: devops-rnd-383110/gcswebapp
 
+Plan for next week:
+- learn kubernetes - how to deploy spring boot app to kubernetes
+
+
+### Export Kubeconfig
+If using multiple config files for clusters:
+```bash
+export KUBECONFIG="/home/tom/.kube/config"
+```
+Add cluster to config
+```bash
+gcloud container clusters get-credentials tom-cluster --region us-central1 --project devops-rnd-383110
+```
+Select cluster in config:
+```bash
+tom@tom-ubuntu:~/Projects$ kubectx
+gke_devops-rnd-383110_us-central1_tom-cluster
+minikube
+tom@tom-ubuntu:~/Projects$ kubectx gke_devops-rnd-383110_us-central1_tom-cluster 
+✔ Switched to context "gke_devops-rnd-383110_us-central1_tom-cluster".
+```
+
+List namespaces:
+```bash
+kubectl get ns
+```
+Get events:
+```bash
+kubectl get events
+```
+
+There is a useful cheatsheet here for kubernetes:
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+This is how to get logs:
+```bash
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectl logs gcs-uploader-webapp-6446865d8-ng8n8 
+Error from server (BadRequest): container "gcs-uploader-webapp" in pod "gcs-uploader-webapp-6446865d8-ng8n8" is waiting to start: ContainerCreating
+```
 

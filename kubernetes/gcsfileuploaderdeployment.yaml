@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gcs-uploader-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gcs-uploader-webapp
+  template:
+    metadata:
+      labels:
+        app: gcs-uploader-webapp
+    spec:
+      serviceAccountName: gcswebapp
+      containers:
+        - name: gcs-uploader-webapp
+          image: gcr.io/devops-rnd-383110/gcswebapp:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always

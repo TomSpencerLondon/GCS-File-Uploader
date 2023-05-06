@@ -30,21 +30,3 @@ docker run -ti --rm -p 8080:8080 \
             gcr.io/devops-rnd-383110/gcswebapp:latest
 
 
-### Notes on config for GCP
-- the default region is us-central1
-- cat .config/gcloud/configurations/config_default shows the set region of the project
-- We have seen how to set the region:
-    - gcloud config set compute/region us-central1
-- We were successful in getting the sha value for the image on GCR
-    - gcloud container images list-tags --format="get(digest,digest[7:])" IMAGE-NAME
-    - but we couldn't work out how to get the region from the sha value
-- This is what the sha contains:
-gcloud container images describe gcr.io/devops-rnd-383110/gcswebapp@sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
-image_summary:
-  digest: sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
-  fully_qualified_digest: gcr.io/devops-rnd-383110/gcswebapp@sha256:7f538d912ed11db461b3260576490ce6e6ae78347783e7c514c20ef471cfea19
-  registry: gcr.io
-  repository: devops-rnd-383110/gcswebapp
-
-Plan for next week:
-- learn kubernetes - how to deploy spring boot app to kubernetes
