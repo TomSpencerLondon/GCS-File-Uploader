@@ -67,3 +67,4 @@ https://www.ipaddressguide.com/cidr
 ![image](https://user-images.githubusercontent.com/27693622/236614129-ac00e508-1dc2-447a-b425-09fa0ed08c78.png)
 
 
+kubectl port-forward svc/ingest-webapp 8080:80

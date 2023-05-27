@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gcswebapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gcs-uploader-webapp
+  name: gcs-uploader-webapp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gcs-uploader-webapp
+  template:
+    metadata:
+      labels:
+        app: gcs-uploader-webapp
+    spec:
+      serviceAccountName: gcswebapp
+      containers:
+        - image: gcr.io/devops-rnd-383110/gcswebapp:latest
+          imagePullPolicy: Always
+          name: gcs-uploader-webapp
+          env:
+            - name: ANIMALS_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: storage-config
+                  key: dev-config.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app: gcs-uploader-webapp
+  name: ingest-webapp-service
+  namespace: default
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: gcs-uploader-webapp
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: storage-config
+data:
+  dev-config.json:
+    '{
+      "animals": {
+        "dog": "alsatian,pomerian,husky",
+        "cat": "persian,siamese,sphynx"
+      }
+     }'

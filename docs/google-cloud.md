@@ -1,7 +1,10 @@
+### cli login for google cloud
 gcloud auth login
 
+### application login for hitting google apis from running application
 gcloud auth application-default login
 
+### kubectx to change context
 
 
 ### Here is how I fixed gcloud cli setup:

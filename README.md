@@ -150,3 +150,6 @@ Error from server (BadRequest): container "gcs-uploader-webapp" in pod "gcs-uplo
 
 This cheatsheet is useful for kubectl:
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+#### Config map
+We have config map and secrets 
