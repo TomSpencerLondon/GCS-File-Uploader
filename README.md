@@ -152,4 +152,7 @@ This cheatsheet is useful for kubectl:
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 #### Config map
-We have config map and secrets 
+We have config map and secrets
+
+### Kubernetes history
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/8c69e790-d1ef-4c2d-963e-8624d1a7c0cf)
