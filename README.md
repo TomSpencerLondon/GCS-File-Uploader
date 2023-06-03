@@ -179,3 +179,75 @@ tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ loft start
 
 ? Enter your email address to create the login for your admin user tomspencerlondon@gmail.com
 ```
+VCluster is an open-source tool developed by Loft Labs
+Loft installs K3s distribution instead of K8 by default. It is configurable.
+Loft simplifies the management and operation of Kubernetes clusters for development.
+VCluster allows users to create lightweight on demand Kuberneetes clusters within a shared Kubernetes cluster
+Shared Kubernetes cluster is useful when you want to have one cluster with multiple namespaces for multiple teams.
+It provides a secure and isolated environment for development and testing workflows.
+VCluster saves money and offers flexibility. 
+Engineers can easily create and delete virtual clusters.
+
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/5822590b-548c-467b-878f-b168197943fa)
+
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/d48aef7f-047f-46db-a933-12e4512627d2)
+
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/c03fc038-086b-4350-8845-53400f89f6cc)
+
+Project - create multiple projects
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/5f0f0c23-a794-4132-aafe-f6fdf9cb0956)
+
+- host cluster is the cluster we are doing virtualization
+- platform cluster is the one where loft is installed
+
+```bash
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectl get ns
+NAME                              STATUS   AGE
+default                           Active   7d
+gke-gmp-system                    Active   7d
+gke-managed-filestorecsi          Active   7d
+gmp-public                        Active   7d
+kube-node-lease                   Active   7d
+kube-public                       Active   7d
+kube-system                       Active   7d
+loft                              Active   25m
+loft-default-v-starter-vcluster   Active   44s
+loft-p-default                    Active   22m
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectx
+gke_devops-rnd-383110_us-central1_autopilot-cluster-1
+gke_devops-rnd-383110_us-central1_in28minutes-cluster
+gke_devops-rnd-383110_us-central1_web-app-cluster
+
+```
+![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/29ea03f1-0861-4328-bb91-eb5d0dad9c5e)
+
+```bash
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ loft login --insecure https://localhost:9898
+[info]   If the browser does not open automatically, please navigate to https://localhost:9898/login?cli=true
+[info]   If you have problems logging in, please navigate to https://localhost:9898/profile/access-keys, click on 'Create Access Key' and then login via 'loft login https://localhost:9898 --access-key ACCESS_KEY --insecure'
+[done] √ Successfully logged into Loft instance https://localhost:9898
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ loft use vcluster starter-vcluster --project default
+[done] √ Successfully updated kube context to use virtual cluster starter-vcluster in project default
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectx
+gke_devops-rnd-383110_us-central1_autopilot-cluster-1
+gke_devops-rnd-383110_us-central1_in28minutes-cluster
+gke_devops-rnd-383110_us-central1_web-app-cluster
+loft-vcluster_starter-vcluster_default
+```
+
+### Steps to deploy application to virtual cluster
+Step 1 - set up kubernetes cluster on GKE with sufficient CPUs
+Step 2 - connect to the cluster and install loft
+Step 3 - go to the loft ui and create vcluster
+Step 4 - connect to your loft vcluster
+Step 5 - deploy application to vcluster
+
+
+```bash
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ kubectx
+gke_devops-rnd-383110_us-central1-c_cluster-virtualization
+gke_devops-rnd-383110_us-central1_autopilot-cluster-1
+gke_devops-rnd-383110_us-central1_in28minutes-cluster
+gke_devops-rnd-383110_us-central1_web-app-cluster
+loft-vcluster_starter-vcluster_default
+```
