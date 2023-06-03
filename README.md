@@ -156,3 +156,26 @@ We have config map and secrets
 
 ### Kubernetes history
 ![image](https://github.com/TomSpencerLondon/LeetCode/assets/27693622/8c69e790-d1ef-4c2d-963e-8624d1a7c0cf)
+
+### Vcluster
+https://loft.sh/docs/getting-started/install
+https://www.vcluster.com/docs/getting-started/setup#download-vcluster-cli
+
+After above all, you loft agent will fail for gcp gke, to make it work, you need to add tcp ports 8443 and 9443 in gcp gke master firewall rule
+
+```bash
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ curl -L -o loft "https://github.com/loft-sh/loft/releases/latest/download/loft-linux-amd64" && sudo install -c -m 0755 loft /usr/local/bin
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 52.6M  100 52.6M    0     0  11.9M      0  0:00:04  0:00:04 --:--:-- 15.5M
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ loft --version
+loft version 3.1.1
+tom@tom-ubuntu:~/Projects/gcs-file-uploader/kubernetes$ loft start
+
+[info]   Welcome to Loft!
+[info]   This installer will help you configure and deploy Loft.
+
+? Enter your email address to create the login for your admin user tomspencerlondon@gmail.com
+```
